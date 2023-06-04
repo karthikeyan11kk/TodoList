@@ -1,4 +1,4 @@
-html {
+ html {
   background-color: #FFBF00;
   background-image: -webkit-linear-gradient(115deg, #FFBF00 50%, #FEFBE9 50%);
   min-height: 840px;
@@ -7,16 +7,20 @@ html {
 h1 {
   color: #fff;
   padding: 10px;
-}
-input:checked+p {
-  text-decoration: line-through;
-  text-decoration-color: #FFBF00;
-}
 
+}
 input[type="checkbox"] {
   margin: 10px;
 }
-
+::after {
+    box-shadow: none;
+}
+input:checked+p{
+  text-decoration:line-through;
+  text-decoration-color: #FFBF00;
+  background-color: #FFBF00;
+  color: #ffffff;
+}
 p {
   margin: 0;
   padding: 20px;
@@ -32,24 +36,12 @@ input[type="text"] {
   background: transparent;
   font-size: 20px;
   font-weight: 200;
-  width:180px;
-}
-input[type="time"]{
-  text-align: center;
-  height: 60px;
-  top: 10px;
-  width:100px;
-  margin-right: 5px;
-  border: none;
-  background: transparent;
-  border-color: white;
-  outline: none;
+  width:350px;
 }
 input[type="text"]:focus {
   outline: none;
   box-shadow: inset 0 -10px 0 0 #FFBF00;
 }
-
 ::placeholder {
   color: grey;
   opacity: 1;
@@ -57,7 +49,6 @@ input[type="text"]:focus {
 button {
   min-height: 20px;
   width: 40px;
-  margin-left: 5px;
   border-radius: 60%;
   border-color: transparent;
   background-color: #FFBF00;
@@ -69,28 +60,23 @@ form {
   text-align: center;
   margin-left: 20px;
 }
-
 footer {
   color: white;
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
 }
-
 #heading {
   background-color: #FFBF00;
   text-align: center;
   max-width: 500px;
 }
-
 .box {
   max-width: 500px;
-
   margin: 50px auto;
   background: white;
   border-radius: 5px;
   box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
 }
-
 .item {
   min-height: 50px;
   background-color:#FEFBE9;
@@ -98,7 +84,6 @@ footer {
   align-items: center;
   border-bottom: 1px solid #FEFBE9;
 }
-
 .item:last-child {
   border-bottom: 0;
 }

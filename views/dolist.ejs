@@ -1,13 +1,5 @@
 <%- include("header") -%>
 
-
-
-<div class="img">
-
-</div>
-
-
-
   <div class="all">
   <div class="box" id="heading">
     <h1><%= whatDay %></h1>
@@ -25,8 +17,6 @@
   <%  } %>
     <form action="/" method="post">
   <input type="text" name="newItem" placeholder="New List" autocomplete="off">
-  <input type="time" name="startTime" placeholder="Start Time">
-  <input type="time" name="endTime" placeholder="End Time">
   <button type="submit" name="submit" value=<%=whatDay %>>+</button>
     </form>
   </div>

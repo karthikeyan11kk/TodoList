@@ -22,51 +22,34 @@ app.get("/",function(req,res){
 
 app.post("/",function(req,res)
 {
-let list=[];
 let item=req.body.newItem;
-let end=req.body.endTime;
-let start=req.body.startTime;
 if(req.body.submit ==="Work-List")
 {
-  list.push(item);
-  list.push(start);
-  list.push(end);
-  workItems.push(list);
+  workItems.push(item);
   res.redirect("/work");
 }
 else{
-  list.push(item);
-  list.push(start);
-  list.push(end);
-  items.push(list);
+  items.push(item);
   res.redirect("/");
 }
 });
 
 
 app.get("/work",function(req,res){
-
   let greet=date.greet();
   res.render("dolist",{
     whatDay:"Work-List",
     newList:workItems,
     greeting:greet
   });
-})
+});
 
 app.post("/",function(req,res)
 {
-  let list=[];
 let item=req.body.newItem;
-let end=req.body.endTime;
-let start=req.body.startTime;
-list.push(item);
-list.push(start);
-list.push(end);
-workItems.push(list);
+workItems.push(item);
 res.redirect("/work");
 });
-
 
 app.listen(3000,function(req,res){
     console.log("server is starting...");
