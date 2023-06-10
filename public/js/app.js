@@ -1,11 +1,20 @@
 const express=require("express");
 const bodyparser=require("body-parser");
+const mongoose=require("mongoose");
 const date=require(__dirname+"/date.js");
 
 const app=express();
 app.use(bodyparser.urlencoded({extended:true}));
 app.set('view engine','ejs');
 app.use(express.static("public"));
+mongoose.connect("mongodb://127.0.0.1:27017/todolist",{useNewUrlParser:true});
+
+const todolistschema=new mongoose.Schema({
+  name:String
+})
+
+const List= mongoose.model("List",todolistSchema);
+
 
 let items=[];
 let workItems=[];
@@ -22,7 +31,11 @@ app.get("/",function(req,res){
 
 app.post("/",function(req,res)
 {
-let item=req.body.newItem;
+const item={
+list:req.body.newItem,
+start:req.body.sTime,
+end:req.body.eTime
+};
 if(req.body.submit ==="Work-List")
 {
   workItems.push(item);
@@ -44,7 +57,7 @@ app.get("/work",function(req,res){
   });
 });
 
-app.post("/",function(req,res)
+app.post("/work",function(req,res)
 {
 let item=req.body.newItem;
 workItems.push(item);

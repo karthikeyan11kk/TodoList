@@ -10,14 +10,19 @@
   <div class="box">
     <% for(var i=0 ;i<newList.length;i++)  { %>
       <div class="item">
-    <p> <input type="checkbox" />
-       <%=newList[i] %>
-    </p>
-  </div>
+    <input type="checkbox" />
+      <p>
+        <%=newList[i].list %>
+        <%="["+ newList[i].start +"|"+ newList[i].end +"]" %>
+      </p>
+</div>
   <%  } %>
     <form action="/" method="post">
-  <input type="text" name="newItem" placeholder="New List" autocomplete="off">
-  <button type="submit" name="submit" value=<%=whatDay %>>+</button>
+  <input type="text" name="newItem" placeholder="New List" autocomplete="off" />
+  <input type="Time" name="sTime" placeholder="Start Time"  />
+  <input type="Time"  name="eTime" placeholder="End Time"  />
+  <button type="submit" name="submit" value=<%=whatDay%>>+</button>
+
     </form>
   </div>
 </div>
