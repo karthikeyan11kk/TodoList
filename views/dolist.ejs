@@ -8,16 +8,19 @@
     <h1><%= greeting %></h1>
   </div>
   <div class="box">
-    <% for(var i=0 ;i<newList.length;i++)  { %>
-      <div class="item">
-    <input type="checkbox" />
-      <p>
-        <%=newList[i].list %>
-        <%="["+ newList[i].start +"|"+ newList[i].end +"]" %>
-      </p>
+
+    <%newList.forEach(function(items){%>
+        <form  action="/delete" method="post">
+  <div class="item">
+<input type="checkbox" name="checkbox" value="<%=items._id %>"onchange="this.form.submit()"/>
+  <p>
+    <%=items.name %>
+  </p>
 </div>
-  <%  } %>
-    <form action="/" method="post">
+</form>
+  <%})%>
+
+  <form class="items" action="/" method="post">
   <input type="text" name="newItem" placeholder="New List" autocomplete="off" />
   <input type="Time" name="sTime" placeholder="Start Time"  />
   <input type="Time"  name="eTime" placeholder="End Time"  />
