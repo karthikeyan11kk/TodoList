@@ -17,13 +17,14 @@
     <%=items.name %>
   </p>
 </div>
+<input type="hidden" name="listele" value=<%=whatDay%>/>
 </form>
   <%})%>
 
   <form class="items" action="/" method="post">
   <input type="text" name="newItem" placeholder="New List" autocomplete="off" />
-  <input type="Time" name="sTime" placeholder="Start Time"  />
-  <input type="Time"  name="eTime" placeholder="End Time"  />
+  <!-- <input type="Time" name="sTime" placeholder="Start Time"  />
+  <input type="Time"  name="eTime" placeholder="End Time"  /> -->
   <button type="submit" name="submit" value=<%=whatDay%>>+</button>
 
     </form>

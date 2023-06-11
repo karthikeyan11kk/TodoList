@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
+const _ = require("lodash");
 const date = require(__dirname + "/date.js");
 
 const app = express();
@@ -15,27 +16,26 @@ mongoose.connect("mongodb://127.0.0.1:27017/todolist", {
 
 const todolistschema = new mongoose.Schema({
   name: String
-})
+});
+const listschema = new mongoose.Schema({
+  name: String,
+  items:[todolistschema]
+});
 
 const List = mongoose.model("List", todolistschema);
+const Tolist = mongoose.model("Tolist", listschema);
+
 
 const l1 = new List({
-  name: "Have to do homework",
+  name: "PATTERN::(YOUR LIST [START TIME|END TIME])",
 });
-const l2 = new List({
-  name: "Have to do excerise",
-});
-const l3 = new List({
-  name: "Have to do eat veggie",
-});
-const list = [l1, l2, l3];
 
-let workItems = [];
+const list = [l1];
+
+let day = date.gdate();
+let greet = date.greet();
 
 app.get("/", function(req, res) {
-  let day = date.gdate();
-  let greet = date.greet();
-
   List.find({}).then(data => {
     if(data.length==0)
     {
@@ -45,51 +45,55 @@ app.get("/", function(req, res) {
         res.redirect("/");
     }
     else{
-        res.render("dolist", {whatDay: day,newList: data,greeting: greet});
+        res.render("dolist", {whatDay:"Today",newList: data,greeting: greet});
     }
   });
 });
 
 app.post("/", function(req, res) {
+  const listname=req.body.submit;
   const item = new List({
     name: req.body.newItem
   });
+  if(listname==="Today")
+  {
   item.save();
   res.redirect("/");
-  // start:req.body.sTime,
-  // end:req.body.eTime
-  // if(req.body.submit ==="Work-List")
-  // {
-  //   workItems.push(item);
-  //   res.redirect("/work");
-  // }
-  // else{
-  //   items.push(item);
-  //   res.redirect("/");
-  // }
+  }
+  else{
+    Tolist.findOne({name:listname}).then(data=>{
+      data.items.push(item);
+      data.save();
+      res.redirect("/"+listname);
+});
+}
 });
 app.post("/delete", function(req, res) {
   const id=req.body.checkbox;
-  List.findByIdAndRemove(id).then(data => {
-    console.log("delete sucess");
-    res.redirect("/");
+  const listname=req.body.listele;
+    List.findByIdAndRemove(id).then(data => {
+      console.log("delete sucess");
+      res.redirect("/");
   });
 });
 
-
-
-app.get("/work", function(req, res) {
-  let greet = date.greet();
-  res.render("dolist", {whatDay: "Work-List",newList: workItems,greeting: greet
+app.get("/:customName", function(req, res) {
+  const customListname=_.capitalize(req.params.customName);
+  Tolist.findOne({name:customListname}).then(data=>{
+    if(!data)
+    {
+      const cusList = new Tolist({
+        name: customListname,
+        items:list
+      });
+      cusList.save();
+      res.redirect("/"+customListname);
+    }
+    else{
+        res.render("dolist", {whatDay:data.name,newList: data.items,greeting: greet});
+    }
+    });
   });
-});
-
-app.post("/work", function(req, res) {
-  let item = req.body.newItem;
-  workItems.push(item);
-  res.redirect("/work");
-});
-
 app.listen(3000, function(req, res) {
   console.log("server is starting...");
 });
