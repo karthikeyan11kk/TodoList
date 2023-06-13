@@ -52,6 +52,7 @@ app.get("/", function(req, res) {
 
 app.post("/", function(req, res) {
   const listname=req.body.submit;
+
   const item = new List({
     name: req.body.newItem
   });
@@ -71,11 +72,23 @@ app.post("/", function(req, res) {
 app.post("/delete", function(req, res) {
   const id=req.body.checkbox;
   const listname=req.body.listele;
+  listname.substring(0,listname.length-1);
+  console.log(listname);
+  if(listname==="Today/")
+  {
     List.findByIdAndRemove(id).then(data => {
       console.log("delete sucess");
       res.redirect("/");
+    });
+  }
+    else{
+       Tolist.findOneAndUpdate({name:listname},{$pull:{items:{_id:id}}}).then(data=>
+    {
+      console.log("delete sucess");
+      res.redirect("/"+listname);
+    });
+    }
   });
-});
 
 app.get("/:customName", function(req, res) {
   const customListname=_.capitalize(req.params.customName);
