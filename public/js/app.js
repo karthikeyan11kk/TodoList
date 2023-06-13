@@ -27,7 +27,7 @@ const Tolist = mongoose.model("Tolist", listschema);
 
 
 const l1 = new List({
-  name: "PATTERN::(YOUR LIST [START TIME|END TIME])",
+  name: "Let's Get Things Done Today 🥰",
 });
 
 const list = [l1];
