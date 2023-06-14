@@ -10,7 +10,7 @@ app.use(bodyparser.urlencoded({
 }));
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
-mongoose.connect("mongodb://127.0.0.1:27017/todolist", {
+mongoose.connect("mongodb+srv://karthi:Todolist@cluster0.i7vhfyc.mongodb.net/Todolist", {
   useNewUrlParser: true
 });
 
@@ -74,7 +74,7 @@ app.post("/delete", function(req, res) {
   const listname=req.body.listele;
   listname.substring(0,listname.length-1);
   console.log(listname);
-  if(listname==="Today/")
+  if(listname==="Today")
   {
     List.findByIdAndRemove(id).then(data => {
       console.log("delete sucess");
