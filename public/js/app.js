@@ -10,7 +10,7 @@ app.use(bodyparser.urlencoded({
 }));
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
-mongoose.connect("mongodb+srv://karthi:Todolist@cluster0.i7vhfyc.mongodb.net/Todolist", {
+mongoose.connect(process.env.URL, {
   useNewUrlParser: true
 });
 
@@ -36,7 +36,7 @@ let day = date.gdate();
 let greet = date.greet();
 
 app.get("/", function(req, res) {
-  List.find({}).then(data => {
+  List.find().then(data => {
     if(data.length==0)
     {
       List.insertMany(list).then(data => {
@@ -107,6 +107,6 @@ app.get("/:customName", function(req, res) {
     }
     });
   });
-app.listen(3000, function(req, res) {
+app.listen(3333, function(req, res) {
   console.log("server is starting...");
 });
